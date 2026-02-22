@@ -8,7 +8,8 @@ clear = lambda: os.system('cls')
 
 
 man = Man('heroes/man.txt', x=5,y=3)
-man.name = input('ваше имя')
+#man.name = input('ваше имя')
+man.name = 'Вадик'
 current_level = ASCIIArt()
 answer=""
 screen_name = "1"
@@ -39,7 +40,7 @@ while answer != "q":
     # Рисуем реакцию персонажей
     current_level.update_characters(man)
     #print("Messages:")
-    answer = input(": ")
+    answer = input(f"{man.name}: ")
     last_answer = answer
     #------------------------------------------
 

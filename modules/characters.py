@@ -1,4 +1,5 @@
 import math
+import time
 class Character:
     """Класс для представления персонажа"""
     def __init__(self, filename, x, y):
@@ -109,6 +110,7 @@ class Man (Character):
         self.money = 200-100
         self.active_character = None
         self.inventory = Inventory()
+        self.supporter = None
         self.name = 'Вадик'
     def set_event(self, event):
         self.event = event
@@ -138,7 +140,8 @@ class Tree (NPC):
     def near_event_message(self):
         return "🌲"
     def near_man(self, man):
-        print ('Hello Man!')
+        #print ('Hello Man!')
+        pass
     def on_action(self, man):
         # Ай!
         self.update_background('heroes/brocken_tree.txt')
@@ -153,8 +156,20 @@ class Dragon (NPC):
     def near_event_message(self):
         return "💭"
     def near_man(self, man):
-        print (f'привет{man.name}')
+        print (f'Джек: Привет {man.name}!')
         pass
     def on_action(self, man):
         # Ай!
+        print (f'{man.name}: Привет Дракон Джек! Хочешь пойти со мной?')
+        time.sleep(1)
+        print (f'Джек: ...')
+        time.sleep(1)
+        print (f'Джек: Да, хочу!')
+        if input(f"Принять в команду? (y/n) {man.name}:") == 'y':
+            man.supporter = self
+            print (f'Джек принят в команду')
+            input('нажмите любую клавишу') 
+        else:
+            print (f'Джек: Пока!')
+            input('нажмите любую клавишу')
         pass
