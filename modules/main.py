@@ -51,7 +51,7 @@ class ASCIIArt:
                 tree = Tree(filename='heroes/tree.txt', x=index-2, y=y)
                 self.characters.append(tree)
             elif symbol == 'd':
-                dragon = Tree(filename='heroes/dragon.txt', x=index-2, y=y)
+                dragon = Dragon(filename='heroes/dragon.txt', x=index-2, y=y)
                 self.characters.append(dragon)
             elif symbol == 'm':
                 mine = Tree(filename='heroes/mine.txt', x=index-2, y=y)
@@ -176,8 +176,9 @@ class ASCIIArt:
         for character in self.characters:
             # рассчитываем расстояние до персонажа     
             if (character.check_critic_distance(man) == True):
+                character.near_man(man)
                 man.set_event(Event('near_event', character.near_event_message()))
-                man.set_active_character(character)
+                man.set_active_character(character)                
 
         # Здесь можно добавить логику движения персонажей
         pass

@@ -109,6 +109,7 @@ class Man (Character):
         self.money = 100
         self.active_character = None
         self.inventory = Inventory()
+        self.name = 'Вадик'
     def set_event(self, event):
         self.event = event
     def set_active_character(self, character):
@@ -136,10 +137,24 @@ class Tree (NPC):
         pass
     def near_event_message(self):
         return "🌲"
-    def near_man(self):
+    def near_man(self, man):
         print ('Hello Man!')
     def on_action(self, man):
         # Ай!
         self.update_background('heroes/brocken_tree.txt')
         man.inventory.collect_resource('wood',self.resource)
         self.resource = 0
+class Dragon (NPC):
+    def __init__(self, filename, x, y):
+        super().__init__(filename, x, y)  # Вызов конструктора родителя
+        self.critic_distance = 4
+    def each_tick (self):
+        pass
+    def near_event_message(self):
+        return "💭"
+    def near_man(self, man):
+   #     print (f'привет{man.name}}')
+        pass
+    def on_action(self, man):
+        # Ай!
+        pass
