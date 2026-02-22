@@ -1,19 +1,21 @@
 from modules.main import ASCIIArt
-from modules.main import Man
+from modules.characters import Man
 import os
-import time
+#import time
 # import keyboard  # pip install keyboard
 
 clear = lambda: os.system('cls')
 
 
 man = Man('heroes/man.txt', x=5,y=3)
+man.name = input('ваше имя')
 current_level = ASCIIArt()
 answer=""
 screen_name = "1"
 last_screen_name = ""
-last_answer=""
+#last_answer=""
 full_scene = current_level.load_scene(screen_name)
+
 while answer != "q":
     
     if man.event.type=='next_screen' or man.event.type=='newborn':
@@ -22,25 +24,28 @@ while answer != "q":
     scene = current_level.draw_man(man, full_scene)
        # scene = current_level.draw_character(dragon)
     #-----------------------------------------
-    # Рисуем всех персонажей на сцене
-    current_level.update_characters(man)
+
+    clear()
+    
     # показываем инвентарь, если нужно
     if (answer == 'i'):
-        scene = current_level.show_inventory(man,scene)
-    clear()
+        scene = current_level.show_inventory(man,scene)    
     print("a - влево, d - вправо, i- инвентарь, e - взаимодействие")
-    print(f"level:{screen_name} event:{man.event.type} деньги: 0")
+    print(f"level:{screen_name} event:{man.event.type} деньги: {man.money}")
     if man.event.type=='near_event':
         print("доступно действие:", man.event.value)
-    current_level.display(scene, underground=True)
-    print("Messages:")
+
+    current_level.display(scene, underground=False)
+    # Рисуем реакцию персонажей
+    current_level.update_characters(man)
+    #print("Messages:")
     answer = input(": ")
     last_answer = answer
     #------------------------------------------
 
-    if (answer == 'd' ):
+    if (answer == 'd' or answer == 'в' ):
         man.move_right(speed=3)
-    if (answer =='a'):
+    if (answer =='a' or answer == 'ф' ):
         man.move_left(speed=3)
 
     if (answer == 'qi' and screen_name == "invent" ):

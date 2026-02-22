@@ -1,8 +1,8 @@
 from modules.characters import *
 class ASCIIArt:
-    def __init__(self, background_art=None):
+    def __init__(self):
         #   background_art (list): изображение
-        self.background = background_art if background_art else []
+        self.background = []
         self.characters = []
         self.man_init_x = 0
         self.man_init_y = 0
@@ -25,7 +25,7 @@ class ASCIIArt:
     def add_characters(self):
         """Создает персонажей на основе последних строк фона"""
         # Проверяем, что в фоне есть хотя бы 2 строки
-        if len(self.background) < 2:
+        if len(self.background) < 3:
             print("Недостаточно строк в фоне для создания персонажей")
             return []
             

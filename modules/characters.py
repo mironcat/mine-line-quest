@@ -106,7 +106,7 @@ class Man (Character):
     def __init__(self, filename, x, y):
         super().__init__(filename, x, y)  # Вызов конструктора родителя
         self.event = Event('newborn', '')
-        self.money = 100
+        self.money = 200-100
         self.active_character = None
         self.inventory = Inventory()
         self.name = 'Вадик'
@@ -153,7 +153,7 @@ class Dragon (NPC):
     def near_event_message(self):
         return "💭"
     def near_man(self, man):
-   #     print (f'привет{man.name}}')
+        print (f'привет{man.name}')
         pass
     def on_action(self, man):
         # Ай!
