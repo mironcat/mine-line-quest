@@ -114,8 +114,9 @@ class ASCIIArt:
             result_scene[character.y + i] = ''.join(line)
             
         return result_scene
-    def show_inventory(self, inventory, scene):
-     return self._draw_character_on_scene(scene, inventory)
+    def show_inventory(self, man, scene):
+     
+     return self._draw_character_on_scene(scene, man.inventory)
         
     def draw_man(self, character, scene, clear_area=True):
         """
