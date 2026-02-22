@@ -2,7 +2,7 @@ from modules.main import ASCIIArt
 from modules.main import Man
 import os
 import time
-import keyboard  # pip install keyboard
+# import keyboard  # pip install keyboard
 
 clear = lambda: os.system('cls')
 
