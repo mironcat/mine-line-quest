@@ -112,6 +112,8 @@ class Man (Character):
         self.inventory = Inventory()
         self.supporter = None
         self.name = 'Вадик'
+    def reset_event(self):
+        self.event = Event('пусто', '')
     def set_event(self, event):
         self.event = event
     def set_active_character(self, character):
@@ -152,11 +154,13 @@ class Dragon (NPC):
         super().__init__(filename, x, y)  # Вызов конструктора родителя
         self.critic_distance = 4
     def each_tick (self):
+        self.age+=1
+        print ('Ухх..')
         pass
     def near_event_message(self):
         return "💭"
     def near_man(self, man):
-        print (f'Джек: Привет {man.name}!')
+        print (f'Джек: Привет {man.name}! Мой возраст {self.age} твоих шагов')
         pass
     def on_action(self, man):
         # Ай!
@@ -165,7 +169,7 @@ class Dragon (NPC):
         print (f'Джек: ...')
         time.sleep(1)
         print (f'Джек: Да, хочу!')
-        if input(f"Принять в команду? (y/n) {man.name}:") == 'y':
+        if input(f"{man.name}: Принять в команду? (y/n)") == 'y':
             man.supporter = self
             print (f'Джек принят в команду')
             input('нажмите любую клавишу') 

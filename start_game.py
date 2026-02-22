@@ -16,7 +16,7 @@ screen_name = "1"
 last_screen_name = ""
 #last_answer=""
 full_scene = current_level.load_scene(screen_name)
-
+man_action=""
 while answer != "q":
     
     if man.event.type=='next_screen' or man.event.type=='newborn':
@@ -27,23 +27,26 @@ while answer != "q":
     #-----------------------------------------
 
     clear()
-    
     # показываем инвентарь, если нужно
     if (answer == 'i'):
         scene = current_level.show_inventory(man,scene)    
-    print("a - влево, d - вправо, i- инвентарь, e - взаимодействие")
-    print(f"level:{screen_name} event:{man.event.type} деньги: {man.money}")
-    if man.event.type=='near_event':
-        print("доступно действие:", man.event.value)
+    
+    current_level.update_characters(man)
+    if man.event.type=='near_event': man_action = man.event.value
+    print(f"a - влево, d - вправо, i- инвентарь, e - взаимодействие {man_action}")
+    print(f"level:{screen_name} event:{man.event.type} деньги: {man.money}")    
 
     current_level.display(scene, underground=False)
     # Рисуем реакцию персонажей
-    current_level.update_characters(man)
+    
     #print("Messages:")
+    #man.reset_event()
+    man_action=""
+    if man.event.type=='near_event': man.active_character.near_man(man)
     answer = input(f"{man.name}: ")
     last_answer = answer
     #------------------------------------------
-
+    
     if (answer == 'd' or answer == 'в' ):
         man.move_right(speed=3)
     if (answer =='a' or answer == 'ф' ):
