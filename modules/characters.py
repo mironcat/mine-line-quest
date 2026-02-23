@@ -118,7 +118,7 @@ class Man (Character):
         self.event = event
     def set_active_character(self, character):
         self.active_character = character
-    def interaction(self):
+    def interaction(self, ):
         self.active_character.on_action(self)
 
 class NPC (Character):
@@ -127,6 +127,7 @@ class NPC (Character):
         super().__init__(filename, x, y)
         self.critic_distance = 3
         self.age = 0
+        self.showOnLevel = True
     def check_critic_distance(self, man):
         # Вычисляем евклидово расстояние между деревом и человеком
         distance = math.sqrt((self.x - man.x)**2 + (self.y - man.y)**2)
@@ -138,6 +139,7 @@ class Tree (NPC):
         self.resource = 2
         self.critic_distance = 4
     def each_tick (self):
+        self.age+=1
         pass
     def near_event_message(self):
         return "🌲"
@@ -170,6 +172,7 @@ class Dragon (NPC):
         time.sleep(1)
         print (f'Джек: Да, хочу!')
         if input(f"{man.name}: Принять в команду? (y/n)") == 'y':
+            self.showOnLevel=False
             man.supporter = self
             print (f'Джек принят в команду')
             input('нажмите любую клавишу') 

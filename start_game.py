@@ -69,7 +69,8 @@ while answer != "q":
     
     if man.event.type=='near_event' and answer == 'e':
          man.interaction()
-         full_scene = current_level._draw_character_on_scene(full_scene,man.active_character)
+         full_scene = current_level.draw_scene_characters(clear_area=True)
+         #full_scene = current_level._draw_character_on_scene(full_scene, man.active_character)
     
     
     
