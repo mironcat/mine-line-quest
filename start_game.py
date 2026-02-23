@@ -12,9 +12,13 @@ man = Man('heroes/man.txt', x=5,y=3)
 man.name = 'Вадик'
 current_level = ASCIIArt()
 answer=""
-screen_name = "0"
+screen_name = "1"
 last_screen_name = ""
 #last_answer=""
+intro = current_level.load_scene("0")
+current_level.display(intro, underground=False)
+input('Нажмите любую клавишу чтобы начать игру.')
+clear()
 full_scene = current_level.load_scene(screen_name)
 man_action=""
 while answer != "q":
