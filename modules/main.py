@@ -112,7 +112,8 @@ class ASCIIArt:
                     if char != ' ':  # не заменяем пробелы
                         line[character.x + j] = char
             result_scene[character.y + i] = ''.join(line)
-            
+        
+
         return result_scene
     def show_inventory(self, man, scene):
      
@@ -130,7 +131,10 @@ class ASCIIArt:
         
         # Рисуем персонажа на сцене
         scene = self._draw_character_on_scene(scene, man, clear_area)
-        
+        if man.supporter is not None:
+            man.supporter.x=man.x+5
+            scene = self._draw_character_on_scene(scene, man.supporter, clear_area)
+
         # ----- Смотрим что под ногами-------
         under_types = scene[-3]  # строка с типами
         under_foot= under_types[man.x]
