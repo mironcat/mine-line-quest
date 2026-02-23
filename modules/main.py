@@ -118,7 +118,7 @@ class ASCIIArt:
      
      return self._draw_character_on_scene(scene, man.inventory)
         
-    def draw_man(self, character, scene, clear_area=True):
+    def draw_man(self, man, scene, clear_area=True):
         """
         Рисует основно персонажа на фоне
         
@@ -129,14 +129,14 @@ class ASCIIArt:
         """
         
         # Рисуем персонажа на сцене
-        scene = self._draw_character_on_scene(scene, character, clear_area)
+        scene = self._draw_character_on_scene(scene, man, clear_area)
         
         # ----- Смотрим что под ногами-------
         under_types = scene[-3]  # строка с типами
-        under_foot= under_types[character.x]
+        under_foot= under_types[man.x]
         try:
             int(under_foot)
-            character.set_event(Event('next_screen', under_foot))
+            man.set_event(Event('next_screen', under_foot))
         except (ValueError, TypeError):
                 if under_foot == '!':
                     event = Event('нет прохода', under_foot)
@@ -144,7 +144,7 @@ class ASCIIArt:
                     event = Event('пусто', under_foot)
                 else: 
                     event = Event('другое', under_foot)
-                character.set_event(event)
+                man.set_event(event)
         # -----------------------------------
         return scene
     
