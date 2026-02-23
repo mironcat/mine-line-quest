@@ -1,4 +1,5 @@
 import math
+import time
 class Character:
     """Класс для представления персонажа"""
     def __init__(self, filename, x, y):
@@ -109,7 +110,10 @@ class Man (Character):
         self.money = 200-100
         self.active_character = None
         self.inventory = Inventory()
+        self.supporter = None
         self.name = 'Вадик'
+    def reset_event(self):
+        self.event = Event('пусто', '')
     def set_event(self, event):
         self.event = event
     def set_active_character(self, character):
@@ -138,7 +142,8 @@ class Tree (NPC):
     def near_event_message(self):
         return "🌲"
     def near_man(self, man):
-        print ('Hello Man!')
+        #print ('Hello Man!')
+        pass
     def on_action(self, man):
         # Ай!
         self.update_background('heroes/brocken_tree.txt')
@@ -149,12 +154,26 @@ class Dragon (NPC):
         super().__init__(filename, x, y)  # Вызов конструктора родителя
         self.critic_distance = 4
     def each_tick (self):
+        self.age+=1
+        print ('Ухх..')
         pass
     def near_event_message(self):
         return "💭"
     def near_man(self, man):
-        print (f'привет{man.name}')
+        print (f'Джек: Привет {man.name}! Мой возраст {self.age} твоих шагов')
         pass
     def on_action(self, man):
         # Ай!
+        print (f'{man.name}: Привет Дракон Джек! Хочешь пойти со мной?')
+        time.sleep(1)
+        print (f'Джек: ...')
+        time.sleep(1)
+        print (f'Джек: Да, хочу!')
+        if input(f"{man.name}: Принять в команду? (y/n)") == 'y':
+            man.supporter = self
+            print (f'Джек принят в команду')
+            input('нажмите любую клавишу') 
+        else:
+            print (f'Джек: Пока!')
+            input('нажмите любую клавишу')
         pass

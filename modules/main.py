@@ -176,11 +176,9 @@ class ASCIIArt:
         for character in self.characters:
             # рассчитываем расстояние до персонажа     
             if (character.check_critic_distance(man) == True):
-                character.near_man(man)
                 man.set_event(Event('near_event', character.near_event_message()))
                 man.set_active_character(character)                
-
-        # Здесь можно добавить логику движения персонажей
+            character.each_tick()
         pass
 
 
