@@ -173,6 +173,7 @@ class Dragon (NPC):
             man.supporter = self
             print (f'Джек принят в команду')
             input('нажмите любую клавишу') 
+            
         else:
             print (f'Джек: Пока!')
             input('нажмите любую клавишу')
