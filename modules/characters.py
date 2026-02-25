@@ -128,6 +128,7 @@ class NPC (Character):
         self.critic_distance = 3
         self.age = 0
         self.showOnLevel = True
+        self.stopMan = False
     def check_critic_distance(self, man):
         # Вычисляем евклидово расстояние между деревом и человеком
         distance = math.sqrt((self.x - man.x)**2 + (self.y - man.y)**2)
@@ -138,6 +139,7 @@ class Javal (NPC):
         super().__init__(filename, x, y)  # Вызов конструктора родителя
         self.resource = 2
         self.critic_distance = 4
+        self.stopMan = True
     def each_tick (self):
         # это выполняется каждый шаг(ход) man'а на текущем уровню
         self.age+=1
@@ -146,12 +148,15 @@ class Javal (NPC):
         # это сообщение показывается когда critic_distance<=расстоянию до man
         return "⛏️"
     def near_man(self, man):
+        if self.stopMan: man.x = self.x-6
         # это происходит когда critic_distance<=расстоянию до man
         #print ('Hello Man!')
         pass
     def on_action(self, man):
         # это происходит когда нажато e
-        self.update_background('heroes/brocken_tree.txt')
+        self.showOnLevel=False
+        self.stopMan=False
+        self.critic_distance =-1
         man.inventory.collect_resource('stones',self.resource)
         self.resource = 0
 class Tree (NPC):
