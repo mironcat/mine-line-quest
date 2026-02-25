@@ -17,11 +17,11 @@ answer:str = ""
 input_str:str = "start"
 screen_name:str = "1"
 last_screen_name = screen_name
-#last_answer=""
-# intro = current_level.load_scene("0")
-# current_level.display(intro, underground=False)
-# input('Нажмите любую клавишу чтобы начать игру.')
-#clear()
+last_answer=""
+intro = current_level.load_scene("0")
+current_level.display(intro, underground=False)
+input('Нажмите любую клавишу чтобы начать игру.')
+clear()
 full_scene = current_level.load_scene(screen_name)
 game_state = {}
 man_action=""
@@ -39,7 +39,6 @@ while answer != "q":
                 # Восстанавливаем из сохранения
                 current_level = game_state[screen_name]
                 full_scene = current_level.draw_scene_characters(clear_area=True)
-                
             else: 
                 full_scene = current_level.load_scene(screen_name)
                 #print(current_level.characters)
