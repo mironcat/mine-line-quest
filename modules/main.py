@@ -93,7 +93,8 @@ class ASCIIArt:
             if character.showOnLevel:
                 scene = self._draw_character_on_scene(scene, character, clear_area)
             else:
-                print('hidden')
+                pass
+                #print('hidden')
         return scene
     
     def _draw_character_on_scene(self, scene, character, clear_area=True):
