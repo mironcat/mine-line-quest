@@ -3,7 +3,8 @@ import copy
 from modules.main import ASCIIArt
 from modules.characters import Man
 import os
-import time
+os.system('mode con: cols=180 lines=30')
+#import time
 # import keyboard  # pip install keyboard
 
 clear = lambda: os.system('cls')

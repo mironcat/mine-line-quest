@@ -183,7 +183,7 @@ class Dragon (NPC):
         self.critic_distance = 4
     def each_tick (self):
         self.age+=1
-        print ('Ухх..')
+        #print ('Ухх..')
         pass
     def near_event_message(self):
         return "💭"
