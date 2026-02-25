@@ -1,6 +1,5 @@
-.pyc
+*.pyc
 modules/__pycache__/
 build/
 dist/
 .vscode
-modules/__pycache__/main.cpython-314.pyc
