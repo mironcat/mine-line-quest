@@ -56,6 +56,9 @@ class ASCIIArt:
             elif symbol == 'm':
                 mine = Tree(filename='heroes/mine.txt', x=index-2, y=y)
                 self.characters.append(mine)
+            elif symbol == 'j':
+                javal = Javal(filename='heroes/javal.txt', x=index-2, y=y)
+                self.characters.append(javal)
             # Можно добавить другие типы
             # elif symbol == 'g':
             #     goblin = Character('heroes/goblin.txt', x=index, y=y)

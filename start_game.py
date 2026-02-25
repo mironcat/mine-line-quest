@@ -14,7 +14,7 @@ man = Man('heroes/man.txt', x=5,y=3)
 man.name = 'Вадик'
 current_level = ASCIIArt()
 answer=""
-screen_name = "1"
+screen_name = "5"
 last_screen_name = screen_name
 #last_answer=""
 # intro = current_level.load_scene("0")
