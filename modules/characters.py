@@ -144,7 +144,7 @@ class Javal (NPC):
         pass
     def near_event_message(self):
         # это сообщение показывается когда critic_distance<=расстоянию до man
-        return "🌲"
+        return "⛏️"
     def near_man(self, man):
         # это происходит когда critic_distance<=расстоянию до man
         #print ('Hello Man!')
@@ -152,7 +152,7 @@ class Javal (NPC):
     def on_action(self, man):
         # это происходит когда нажато e
         self.update_background('heroes/brocken_tree.txt')
-        man.inventory.collect_resource('wood',self.resource)
+        man.inventory.collect_resource('stones',self.resource)
         self.resource = 0
 class Tree (NPC):
     def __init__(self, filename, x, y):
