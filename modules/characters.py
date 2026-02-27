@@ -2,7 +2,7 @@ import math
 import time
 class Character:
     """Класс для представления персонажа"""
-    def __init__(self, filename, x, y):
+    def __init__(self, filename, x, y, clear_backgound = True):
         try:
             with open(filename, 'r', encoding='utf-8') as file:
                 template = file.read().split('\n')
@@ -16,14 +16,16 @@ class Character:
         self.width = len(template[0]) if template else 0
         self.x = x
         self.y = y
+        self.clear_backgound = clear_backgound
 
-    def update_background(self, filename):
+    def update_background(self, filename, clear_backgound = True):
         """Обновляет изображение персонажа из файла"""
         try:
             with open(filename, 'r', encoding='utf-8') as f:
                 self.template = f.read().splitlines()
                 self.height = len(self.template)
                 self.width = len(self.template[0]) if self.template else 0                
+                self.clear_backgound = clear_backgound
         except FileNotFoundError:
             print(f"Файл {filename} не найден")
     def move_right(self,speed:int):
@@ -112,6 +114,7 @@ class Man (Character):
         self.inventory = Inventory()
         self.supporter = None
         self.name = 'Вадик'
+        self.command = ''
     def reset_event(self):
         self.event = Event('пусто', '')
     def set_event(self, event):
@@ -123,8 +126,8 @@ class Man (Character):
 
 class NPC (Character):
     
-    def __init__(self, filename, x, y):
-        super().__init__(filename, x, y)
+    def __init__(self, filename, x, y, clear_backgound = True):
+        super().__init__(filename, x, y, clear_backgound)
         self.critic_distance = 3
         self.age = 0
         self.showOnLevel = True
@@ -132,7 +135,25 @@ class NPC (Character):
     def check_critic_distance(self, man):
         # Вычисляем евклидово расстояние между деревом и человеком
         distance = math.sqrt((self.x - man.x)**2 + (self.y - man.y)**2)
+        print(distance)
         return distance <= self.critic_distance
+
+class Wall (NPC):
+    def __init__(self, filename, x, y):
+        super().__init__(filename, x, y, clear_backgound=False)  # Вызов конструктора родителя
+        self.critic_distance = 6
+        self.stopMan = True
+    def each_tick (self):
+        self.age+=1
+        pass
+    def near_event_message(self):
+        return "нет прохода"
+    def near_man(self, man):
+        if self.stopMan and man.command == "a": man.x = self.x+6
+        if self.stopMan and man.command == "d": man.x = self.x-6
+        pass
+    def on_action(self, man):
+        pass
 
 class Javal (NPC):
     def __init__(self, filename, x, y):

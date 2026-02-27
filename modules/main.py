@@ -11,7 +11,7 @@ class ASCIIArt:
     def load_scene(self,screen_name):
          screen_filename ='screens/'+screen_name+'.txt'
          self.set_background(screen_filename)
-         return self.draw_scene_characters(clear_area=True)
+         return self.draw_scene_characters()
     
     def set_background(self, filename):
         """Загружает изображение из файла"""
@@ -59,7 +59,12 @@ class ASCIIArt:
             elif symbol == 'j':
                 javal = Javal(filename='heroes/javal.txt', x=index-2, y=y)
                 self.characters.append(javal)
-            # Можно добавить другие типы
+            elif symbol == '!':
+                wall = Wall(filename='heroes/wall.txt', x=index-2, y=0)
+                self.characters.append(wall)                
+#            elif symbol == '!':
+#                Man
+            'Можно добавить другие типы'
             # elif symbol == 'g':
             #     goblin = Character('heroes/goblin.txt', x=index, y=y)
             #     self.characters.append(goblin)
@@ -78,7 +83,7 @@ class ASCIIArt:
         """
         return Character(template)
     
-    def draw_scene_characters(self, clear_area=True):
+    def draw_scene_characters(self):
         """Рисует персонажей на сцене"""
         if not self.background:
             print("Нет фонового изображения")
@@ -91,19 +96,19 @@ class ASCIIArt:
         for character in self.characters:
             # Рисуем персонажа на сцене
             if character.showOnLevel:
-                scene = self._draw_character_on_scene(scene, character, clear_area)
+                scene = self._draw_character_on_scene(scene, character)
             else:
                 pass
                 #print('hidden')
         return scene
     
-    def _draw_character_on_scene(self, scene, character, clear_area=True):
+    def _draw_character_on_scene(self, scene, character):
         """Вспомогательный метод для отрисовки одного персонажа на сцене"""
         # Создаем копию сцены для работы
         result_scene = scene.copy()
         
         # Если нужно, очищаем область
-        if clear_area:
+        if character.clear_backgound:
             result_scene = self._clear_area(result_scene, character.x, character.y, 
                                            character.width, character.height)
         
@@ -118,7 +123,6 @@ class ASCIIArt:
                     if char != ' ':  # не заменяем пробелы
                         line[character.x + j] = char
             result_scene[character.y + i] = ''.join(line)
-        
 
         return result_scene
     def show_inventory(self, man, scene):
@@ -136,10 +140,10 @@ class ASCIIArt:
         """
         
         # Рисуем персонажа на сцене
-        scene = self._draw_character_on_scene(scene, man, clear_area)
+        scene = self._draw_character_on_scene(scene, man)
         if man.supporter is not None:
             man.supporter.x=man.x+5
-            scene = self._draw_character_on_scene(scene, man.supporter, clear_area)
+            scene = self._draw_character_on_scene(scene, man.supporter)
 
         # ----- Смотрим что под ногами-------
         under_types = scene[-3]  # строка с типами
