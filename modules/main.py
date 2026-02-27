@@ -60,7 +60,7 @@ class ASCIIArt:
                 javal = Javal(filename='heroes/javal.txt', x=index-2, y=y)
                 self.characters.append(javal)
             elif symbol == '!':
-                wall = Wall(filename='heroes/wall.txt', x=index-2, y=0)
+                wall = Wall(filename='heroes/wall.txt', x=index-2, y=y)
                 self.characters.append(wall)                
 #            elif symbol == '!':
 #                Man

@@ -17,7 +17,7 @@ man.command=""
 current_level = ASCIIArt()
 answer:str = ""
 input_str:str = ""
-screen_name:str = "4"
+screen_name:str = "5"
 last_screen_name = screen_name
 last_answer=""
 #intro = current_level.load_scene("0")
@@ -69,7 +69,7 @@ while answer != "q":
             man.move_left(speed=3)
         if man.event.type=='near_event' and answer == 'e':
             man.interaction()
-            full_scene = current_level.draw_scene_characters(clear_area=True)
+            full_scene = current_level.draw_scene_characters()
             #full_scene = current_level._draw_character_on_scene(full_scene, man.active_character)
         
         if man.event.type=='next_screen':
