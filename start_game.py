@@ -53,7 +53,7 @@ while answer != "q":
         current_level.update_characters(man)
         if man.event.type=='near_event': man_action = man.event.value
         print(f"a - влево, d - вправо, i- инвентарь, e - взаимодействие (можно сделать):{man_action}")
-        print(f"EVENT.TYPE: {man.event.type} уровень:{screen_name} деньги: {man.money}")    
+        print(f"уровень:{screen_name} деньги: {man.money}")    
 
         current_level.display(scene, underground=False)
         # Рисуем реакцию персонажей
