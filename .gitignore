@@ -1,4 +1,4 @@
-.pyc
+*.pyc
 modules/__pycache__/
 build/
 dist/
