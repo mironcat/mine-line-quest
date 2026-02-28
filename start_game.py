@@ -44,7 +44,7 @@ while answer != "q":
         scene = current_level.draw_man(man, full_scene)
         # scene = current_level.draw_character(dragon)
         #-----------------------------------------
-        time.sleep(.1)
+        #time.sleep(.1)
         clear()
         # показываем инвентарь, если нужно
         if (answer == 'i'):
@@ -59,9 +59,14 @@ while answer != "q":
         # Рисуем реакцию персонажей
         man_action=""
         if man.event.type=='near_event': man.active_character.near_man(man)
-        if input_str == "" : input_str = input(f"{man.name}: ")
-        answer = input_str[0]
-        input_str = input_str[1:]  # остаток строки
+        if input_str == "" : 
+             input_str = input(f"{man.name}: ")
+        if input_str == "" : 
+             answer = "" 
+             input_str = ""  # остаток строки
+        else: 
+             answer = input_str[0]
+             input_str = input_str[1:]  # остаток строки
         man.command=answer
         last_answer = answer
         #------------------------------------------
