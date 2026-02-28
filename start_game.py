@@ -4,7 +4,7 @@ from modules.main import ASCIIArt
 from modules.characters import Man
 import os
 #os.system('mode con: cols=180 lines=30')
-#import time
+import time
 # import keyboard  # pip install keyboard
 
 clear = lambda: os.system('cls')
@@ -17,7 +17,7 @@ man.command=""
 current_level = ASCIIArt()
 answer:str = ""
 input_str:str = ""
-screen_name:str = "5"
+screen_name:str = "1"
 last_screen_name = screen_name
 last_answer=""
 #intro = current_level.load_scene("0")
@@ -44,6 +44,7 @@ while answer != "q":
         scene = current_level.draw_man(man, full_scene)
         # scene = current_level.draw_character(dragon)
         #-----------------------------------------
+        time.sleep(.1)
         clear()
         # показываем инвентарь, если нужно
         if (answer == 'i'):
@@ -58,7 +59,9 @@ while answer != "q":
         # Рисуем реакцию персонажей
         man_action=""
         if man.event.type=='near_event': man.active_character.near_man(man)
-        answer = input(f"{man.name}: ")
+        if input_str == "" : input_str = input(f"{man.name}: ")
+        answer = input_str[0]
+        input_str = input_str[1:]  # остаток строки
         man.command=answer
         last_answer = answer
         #------------------------------------------
