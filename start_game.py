@@ -1,5 +1,6 @@
+# создатель exe файла
+# pyinstaller --clean .\make_exe.spec   
 import copy
-
 from modules.main import ASCIIArt
 from modules.characters import Man
 import os
