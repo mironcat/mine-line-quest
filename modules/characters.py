@@ -71,7 +71,8 @@ class Inventory(Message):
         self.wood = 0
         self.stones = 0
         self.iron = 0
-        self.diamonds = 0  
+        self.diamonds = 0
+        self.clear_backgound=True
         self.resources = ['wood', 'stones', 'iron', 'diamonds']  # список ресурсов
         self.update()
     
