@@ -136,7 +136,8 @@ class NPC (Character):
     def check_critic_distance(self, man):
         # Вычисляем евклидово расстояние между деревом и человеком
         distance = math.sqrt((self.x - man.x)**2 + (self.y - man.y)**2)
-        print(f"{self.__class__.__name__}:{distance}")
+        # отображение дистанции
+        #print(f"{self.__class__.__name__}:{distance}")
         return distance <= self.critic_distance
 
 class Wall (NPC):

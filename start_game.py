@@ -1,5 +1,6 @@
+# создатель exe файла
+# pyinstaller --clean .\make_exe.spec   
 import copy
-
 from modules.main import ASCIIArt
 from modules.characters import Man
 import os
@@ -11,8 +12,8 @@ clear = lambda: os.system('cls')
 
 
 man = Man('heroes/man.txt', x=5,y=3)
-#man.name = input('ваше имя')
-man.name = 'Вадик'
+man.name = input('Представьтесь, пожалуйста: ')
+#man.name = 'Вадик'
 man.command=""
 current_level = ASCIIArt()
 answer:str = ""
@@ -20,9 +21,9 @@ input_str:str = ""
 screen_name:str = "1"
 last_screen_name = screen_name
 last_answer=""
-#intro = current_level.load_scene("0")
-#current_level.display(intro, underground=False)
-#input('Нажмите любую клавишу чтобы начать игру.')
+intro = current_level.load_scene("0")
+current_level.display(intro, underground=False)
+input('Нажмите любую клавишу чтобы начать игру.')
 clear()
 full_scene = current_level.load_scene(screen_name)
 game_state = {}
@@ -53,9 +54,9 @@ while answer != "q":
         current_level.update_characters(man)
         if man.event.type=='near_event': man_action = man.event.value
         print(f"a - влево, d - вправо, i- инвентарь, e - взаимодействие (можно сделать):{man_action}")
-        print(f"EVENT.TYPE: {man.event.type} уровень:{screen_name} деньги: {man.money}")    
+        print(f"уровень:{screen_name} деньги: {man.money}")    
 
-        current_level.display(scene, underground=True)
+        current_level.display(scene, underground=False)
         # Рисуем реакцию персонажей
         man_action=""
         if man.event.type=='near_event': man.active_character.near_man(man)
