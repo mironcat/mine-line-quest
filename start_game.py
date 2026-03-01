@@ -10,20 +10,26 @@ import time
 
 clear = lambda: os.system('cls')
 
+#отладка!!
+debug = True
 
 man = Man('heroes/man.txt', x=5,y=3)
-man.name = input('Представьтесь, пожалуйста: ')
-#man.name = 'Вадик'
+
+if debug:
+    man.name = 'Вадик'
+else:
+    man.name = input('Представьтесь, пожалуйста: ')
+
 man.command=""
 current_level = ASCIIArt()
 answer:str = ""
 input_str:str = ""
-screen_name:str = "1"
+screen_name:str = "4"
 last_screen_name = screen_name
 last_answer=""
 intro = current_level.load_scene("0")
-current_level.display(intro, underground=False)
-input('Нажмите любую клавишу чтобы начать игру.')
+if not debug: current_level.display(intro, underground=False)
+if not debug: input('Нажмите любую клавишу чтобы начать игру.')
 clear()
 full_scene = current_level.load_scene(screen_name)
 game_state = {}
@@ -56,7 +62,7 @@ while answer != "q":
         print(f"a - влево, d - вправо, i- инвентарь, e - взаимодействие (можно сделать):{man_action}")
         print(f"уровень:{screen_name} деньги: {man.money}")    
 
-        current_level.display(scene, underground=False)
+        current_level.display(scene, underground=debug)
         # Рисуем реакцию персонажей
         man_action=""
         if man.event.type=='near_event': man.active_character.near_man(man)
