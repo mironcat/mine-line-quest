@@ -94,13 +94,13 @@ class Inventory(Message):
         # Находим максимальную длину строки в template
         self.width = max(len(line) for line in self.template) if self.template else 0
     
-    def collect_resource(self, resource: str, amount: int) -> None:
-        if resource in self.resources:
-            current_value = getattr(self, resource)
-            setattr(self, resource, current_value + amount)
+    def collect_resource(self, resource_name: str, amount: int) -> None:
+        if resource_name in self.resources:
+            current_value = getattr(self, resource_name)
+            setattr(self, resource_name, current_value + amount)
             self.update()
         else:
-            print(f"Ресурс '{resource}' не существует!")
+            print(f"Ресурс '{resource_name}' не существует!")
             input("Нажмите любую клавишу")
 
 
@@ -216,7 +216,8 @@ class Ore (NPC):
     def on_action(self, man):
         self.showOnLevel = False
         if self.resource != 0:
-            man.inventory.collect_resource('stones', random.randrange(0, 4), 'iron', self.resource)
+            man.inventory.collect_resource('iron', self.resource)
+            man.inventory.collect_resource('stones', random.randrange(0, 4))
             self.resource = 0
 class Dragon (NPC):
     def __init__(self, filename, x, y):
