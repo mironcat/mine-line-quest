@@ -1,5 +1,6 @@
 import math
 import time
+import random
 class Character:
     """Класс для представления персонажа"""
     def __init__(self, filename, x, y, clear_backgound = True):
@@ -71,22 +72,19 @@ class Inventory(Message):
         self.wood = 0
         self.stones = 0
         self.iron = 0
-        self.diamonds = 0
         self.clear_backgound=True
-        self.resources = ['wood', 'stones', 'iron', 'diamonds']  # список ресурсов
+        self.resources = ['wood', 'stones', 'iron']  # список ресурсов
         self.update()
     
     def update(self):
         w = str(self.wood)      # Преобразуем в строку
         s = str(self.stones)    # Преобразуем в строку
         i = str(self.iron)      # Преобразуем в строку
-        d = str(self.diamonds)  # Преобразуем в строку
         
         self.template = [
             '|--------------------|',
             f'| ДЕРЕВО: {w:<7}    |',
             f'| ЖЕЛЕЗО: {i:<7}    |',
-            f'| АЛМАЗЫ: {d:<7}    |',
             f'| КАМНИ:  {s:<7}    |',
             '|--------------------|'
         ]
@@ -137,7 +135,7 @@ class NPC (Character):
         # Вычисляем евклидово расстояние между деревом и человеком
         distance = math.sqrt((self.x - man.x)**2 + (self.y - man.y)**2)
         # отображение дистанции
-        #print(f"{self.__class__.__name__}:{distance}")
+        print(f"{self.__class__.__name__}:{distance}")
         return distance <= self.critic_distance
 
 class Wall (NPC):
@@ -200,6 +198,26 @@ class Tree (NPC):
         self.update_background('heroes/brocken_tree.txt')
         man.inventory.collect_resource('wood',self.resource)
         self.resource = 0
+class Ore (NPC):
+    def __init__(self, filename, x, y):
+        super().__init__(filename, x, y)  # Вызов конструктора родителя
+        self.resource = random.randrange(2, 6)
+        self.critic_distance = 5
+    def each_tick (self):
+        self.age+=1
+        pass
+    def near_event_message(self):
+        if self.resource != 0: return "⛏"
+        else:
+            return" "
+    def near_man(self, man):
+        return 'Hello Man!'
+        pass
+    def on_action(self, man):
+        self.showOnLevel = False
+        if self.resource != 0:
+            man.inventory.collect_resource('stones', random.randrange(0, 4), 'iron', self.resource)
+            self.resource = 0
 class Dragon (NPC):
     def __init__(self, filename, x, y):
         super().__init__(filename, x, y)  # Вызов конструктора родителя
@@ -211,7 +229,7 @@ class Dragon (NPC):
     def near_event_message(self):
         return "💭"
     def near_man(self, man):
-        print (f'Джек: Привет {man.name}! Мой возраст {self.age} твоих шагов')
+        print (f'Джек: Привет {man.name}!')
         pass
     def on_action(self, man):
         # Ай!
