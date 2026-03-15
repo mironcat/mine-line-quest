@@ -1,2 +1,3 @@
 MINE-LINE
-Вот [https://github.com/mironcat/mine-line-quest/wiki](вики.)
+
+Перейти на [вики](https://github.com/mironcat/mine-line-quest/wiki)
