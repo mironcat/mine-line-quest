@@ -138,6 +138,21 @@ class NPC (Character):
         print(f"{self.__class__.__name__}:{distance}")
         return distance <= self.critic_distance
 
+class Lodka (NPC):
+    def __init__(self, filename, x, y):
+        super().__init__(filename, x, y, clear_backgound=False)  # Вызов конструктора родителя
+        self.critic_distance = 6
+        self.stopMan = False
+    def each_tick (self):
+        self.age+=1
+        pass
+    def near_event_message(self):
+        return "вы можете сесть в лодку"
+    def near_man(self, man):
+        pass
+    def on_action(self, man):
+        pass
+
 class Wall (NPC):
     def __init__(self, filename, x, y):
         super().__init__(filename, x, y, clear_backgound=False)  # Вызов конструктора родителя

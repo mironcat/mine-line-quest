@@ -24,7 +24,7 @@ man.command=""
 current_level = ASCIIArt()
 answer:str = ""
 input_str:str = ""
-screen_name:str = "1"
+screen_name:str = "8"
 last_screen_name = screen_name
 last_answer=""
 intro = current_level.load_scene("0")
@@ -68,12 +68,13 @@ while answer != "q":
         if man.event.type=='near_event': man.active_character.near_man(man)
         if input_str == "" : 
              input_str = input(f"{man.name}: ")
+        if len(input_str) >10 : input_str=input_str[:10]
         if input_str == "" : 
              answer = "" 
              input_str = ""  # остаток строки
         else: 
-             answer = input_str[0]
-             input_str = input_str[1:]  # остаток строки
+             answer = input_str[0] # берем первый символ из введеной строки (input_str)
+             input_str = input_str[1:]  # остаток строки, мы обрезаем введенную строку на один символ
         man.command=answer
         last_answer = answer
         #------------------------------------------
