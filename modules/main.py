@@ -62,6 +62,9 @@ class ASCIIArt:
             elif symbol == 'j':
                 javal = Javal(filename='heroes/javal.txt', x=index-2, y=y)
                 self.characters.append(javal)
+            elif symbol == 'l':
+                lodka = Lodka(filename='heroes/lodka.txt', x=index-2, y=y)
+                self.characters.append(lodka)                 
             elif symbol == '!':
                 wall = Wall(filename='heroes/empty.txt', x=index-2, y=y)
                 self.characters.append(wall)                
