@@ -156,7 +156,11 @@ class ASCIIArt:
         under_foot= under_types[man.x]
         try:
             int(under_foot)
-            man.set_event(Event('next_screen', under_foot))
+            level_number3= scene[-3][man.x]
+            level_number2= scene[-2][man.x]
+            level_number1= scene[-1][man.x]
+            level_number=str(int(level_number1+level_number2+level_number3))
+            man.set_event(Event('next_screen', level_number))
         except (ValueError, TypeError):
                 if under_foot == '!':
                     event = Event('нет прохода', under_foot)
