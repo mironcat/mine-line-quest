@@ -138,6 +138,30 @@ class NPC (Character):
         print(f"{self.__class__.__name__}:{distance}")
         return distance <= self.critic_distance
 
+class Lodka (NPC):
+    def __init__(self, filename, x, y):
+        super().__init__(filename, x, y)  # Вызов конструктора родителя
+        self.critic_distance = 6
+        self.stopMan = True
+    def each_tick (self):
+        self.age+=1
+        pass
+    def near_event_message(self):
+        return "вы можете сесть в лодку"
+    def near_man(self, man):
+        if self.stopMan: man.x = self.x-6
+        pass
+    def on_action(self, man):
+        # это происходит когда нажато e
+        self.showOnLevel=False
+        self.stopMan=False
+        self.critic_distance =-1
+        # превращаюсь в сидящего в лодке чувака
+        man.x = self.x+2 # перемещаюсь чтобы сесть в лодку
+        man.update_background('heroes/manlodka.txt')
+        man.set_event(Event('next_screen', '9'))
+        pass
+
 class Wall (NPC):
     def __init__(self, filename, x, y):
         super().__init__(filename, x, y, clear_backgound=False)  # Вызов конструктора родителя

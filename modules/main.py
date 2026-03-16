@@ -62,8 +62,11 @@ class ASCIIArt:
             elif symbol == 'j':
                 javal = Javal(filename='heroes/javal.txt', x=index-2, y=y)
                 self.characters.append(javal)
+            elif symbol == 'l':
+                lodka = Lodka(filename='heroes/lodka.txt', x=index-2, y=y)
+                self.characters.append(lodka)                 
             elif symbol == '!':
-                wall = Wall(filename='heroes/wall.txt', x=index-2, y=y)
+                wall = Wall(filename='heroes/empty.txt', x=index-2, y=y)
                 self.characters.append(wall)                
 #            elif symbol == '!':
 #                Man
@@ -153,7 +156,11 @@ class ASCIIArt:
         under_foot= under_types[man.x]
         try:
             int(under_foot)
-            man.set_event(Event('next_screen', under_foot))
+            level_number3= scene[-3][man.x]
+            level_number2= scene[-2][man.x]
+            level_number1= scene[-1][man.x]
+            level_number=str(int(level_number1+level_number2+level_number3))
+            man.set_event(Event('next_screen', level_number))
         except (ValueError, TypeError):
                 if under_foot == '!':
                     event = Event('нет прохода', under_foot)
