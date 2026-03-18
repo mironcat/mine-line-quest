@@ -204,7 +204,29 @@ class ASCIIArt:
                 man.set_active_character(character)                
             character.each_tick()
         pass
+class Trader(NPC):
+    def __init__(self, filename, x, y):
+        super().__init__(filename, x, y)
+        self.critic_distance = 5
 
+    def near_event_message(self):
+        return "Обменять: 3 железа + 2 палки = КИРКА? (e)"
+
+    def on_action(self, man):
+        # Проверяем, хватает ли ресурсов в инвентаре
+        if man.inventory.iron >= 3 and man.inventory.wood >= 2:
+            # Забираем ресурсы
+            man.inventory.iron -= 3
+            man.inventory.wood -= 2
+            man.inventory.update() # Обновляем рамку инвентаря
+            
+            # Даем кирку (можешь добавить переменную self.has_pickaxe в Man)
+            man.has_pickaxe = True 
+            print("Торговец: Поздравляю! Теперь твоя кирка железная!")
+            input("Нажмите любую клавишу...")
+        else:
+            print("Торговец: Маловато добра... Приходи, когда наберешь 3 железа и 2 палки!")
+            input("Нажмите любую клавишу...")
 
     
 
