@@ -108,12 +108,13 @@ class Man (Character):
     def __init__(self, filename, x, y):
         super().__init__(filename, x, y)  # Вызов конструктора родителя
         self.event = Event('newborn', '')
-        self.money = 200-100
+        self.money = 100
         self.active_character = None
         self.inventory = Inventory()
         self.supporter = None
         self.name = 'Вадик'
         self.command = ''
+        self.has_pickaxe = True
     def reset_event(self):
         self.event = Event('пусто', '')
     def set_event(self, event):
@@ -273,3 +274,50 @@ class Dragon (NPC):
             print (f'Джек: Пока!')
             input('нажмите любую клавишу')
         pass
+    def on_action(self, man):
+        print("--- КУЗНИЦА ПУСТЫНИ ---")
+        print("1. Каменная КИРКА  (3 камня + 2 палки)")
+        print("2. Каменный МЕЧ    (2 камня + 1 палка)")
+        print("3. Железная КИРКА  (3 железа + 2 палки)")
+        print("4. Железный МЕЧ    (2 железа + 1 палка)")
+        print("-----------------------")
+        choice = input(f"{man.name}, что куём? (1-4): ")
+
+        # Логика для КАМЕННОЙ КИРКИ
+        if choice == '1':
+            if man.inventory.stones >= 3 and man.inventory.wood >= 2:
+                man.inventory.stones -= 3
+                man.inventory.wood -= 2
+                man.pickaxe_type = "stone" # Уровень 1
+                print("Торговец: Для начала сойдёт! Камень — сила!")
+            else:
+                print("Торговец: Не хватает камней или палок!")
+
+        # Логика для КАМЕННОГО МЕЧА
+        elif choice == '2':
+            if man.inventory.stones >= 2 and man.inventory.wood >= 1:
+                man.inventory.stones -= 2
+                man.inventory.wood -= 1
+                man.sword_type = "stone"
+                print("Торговец: Тяжёлый, но острый!")
+                                                                   
+        elif choice == '3': # КИРКА
+            if man.inventory.iron >= 3 and man.inventory.wood >= 2:
+                man.inventory.iron -= 3
+                man.inventory.wood -= 2
+                man.has_pickaxe = True
+                print("Торговец: Мощная штука! Любой завал разлетится!")
+            else:
+                print("Торговец: Не хватает ресурсов на кирку!")
+
+        elif choice == '4': # МЕЧ
+            if man.inventory.iron >= 2 and man.inventory.wood >= 1:
+                man.inventory.iron -= 2
+                man.inventory.wood -= 1
+                man.has_sword = True # Добавь эту переменную в класс Man
+                print("Торговец: Острый, как бритва! Дракон оценит!")
+            else:
+                print("Торговец: Маловато железа для такого клинка!")
+
+        man.inventory.update()
+        input("\nНажмите любую клавишу...")
