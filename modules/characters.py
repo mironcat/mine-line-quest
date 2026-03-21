@@ -282,7 +282,7 @@ class Trader (NPC):
         # это происходит когда нажато e
         self.showOnLevel=True
         self.stopMan=False
-        self.critic_distance =-1
+        self.critic_distance =4
         # превращаюсь в сидящего в лодке чувака
         man.update_background('heroes/manpickaxestone.txt')
         pass
@@ -290,7 +290,7 @@ class Trader (NPC):
         # это происходит когда нажато e
         self.showOnLevel=True
         self.stopMan=False
-        self.critic_distance =-1
+        self.critic_distance =4
         # превращаюсь в сидящего в лодке чувака
         man.update_background('heroes/manswordstone.txt')
         pass
@@ -298,7 +298,7 @@ class Trader (NPC):
         # это происходит когда нажато e
         self.showOnLevel=True
         self.stopMan=False
-        self.critic_distance =-1
+        self.critic_distance =4
         # превращаюсь в сидящего в лодке чувака
         man.update_background('heroes/manpickaxeiron.txt')
         pass
@@ -306,7 +306,7 @@ class Trader (NPC):
         # это происходит когда нажато e
         self.showOnLevel=True
         self.stopMan=False
-        self.critic_distance =-1
+        self.critic_distance =4
         # превращаюсь в сидящего в лодке чувака
         man.update_background('heroes/manswordiron.txt')
         pass
