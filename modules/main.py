@@ -70,16 +70,10 @@ class ASCIIArt:
                 self.characters.append(wall)                
             elif symbol == 'r':
                 trader = Trader(filename='heroes/trader.txt', x=index-2, y=y)
-                self.characters.append(trader)
-#            elif symbol == '!':
-#                Man
-            'Можно добавить другие типы'
-            # elif symbol == 'g':
-            #     goblin = Character('heroes/goblin.txt', x=index, y=y)
-            #     self.characters.append(goblin)
-                
-        return self.characters
-    def get_coords(self, under_coords1,under_coords2, index):
+                self.characters.append(trader)                               
+                                                                             
+        return self.characters                                               
+    def get_coords(self, under_coords1,under_coords2, index):                
             # Разбиваем строки на отдельные символы
         coord_str = under_coords1[index]+under_coords2[index]
         return int(coord_str)

@@ -69,8 +69,8 @@ class Message():
 class Inventory(Message):
     def __init__(self):
         super().__init__()  # Вызов конструктора родителя
-        self.wood = 0
-        self.stones = 0
+        self.wood = 2
+        self.stones = 3
         self.iron = 0
         self.clear_backgound=True
         self.resources = ['wood', 'stones', 'iron']  # список ресурсов
@@ -136,7 +136,7 @@ class NPC (Character):
         # Вычисляем евклидово расстояние между деревом и человеком
         distance = math.sqrt((self.x - man.x)**2 + (self.y - man.y)**2)
         # отображение дистанции
-        print(f"{self.__class__.__name__}:{distance}")
+        #print(f"{self.__class__.__name__}:{distance}")
         return distance <= self.critic_distance
 
 class Lodka (NPC):
@@ -274,6 +274,50 @@ class Dragon (NPC):
             print (f'Джек: Пока!')
             input('нажмите любую клавишу')
         pass
+class Trader (NPC):
+    def __init__(self, filename, x, y):
+        super().__init__(filename, x, y)  # Вызов конструктора родителя
+        self.critic_distance = 4
+    def pickstone(self, man):
+        # это происходит когда нажато e
+        self.showOnLevel=True
+        self.stopMan=False
+        self.critic_distance =-1
+        # превращаюсь в сидящего в лодке чувака
+        man.update_background('heroes/manpickaxestone.txt')
+        pass
+    def swordstone(self, man):
+        # это происходит когда нажато e
+        self.showOnLevel=True
+        self.stopMan=False
+        self.critic_distance =-1
+        # превращаюсь в сидящего в лодке чувака
+        man.update_background('heroes/manswordstone.txt')
+        pass
+    def pickiron(self, man):
+        # это происходит когда нажато e
+        self.showOnLevel=True
+        self.stopMan=False
+        self.critic_distance =-1
+        # превращаюсь в сидящего в лодке чувака
+        man.update_background('heroes/manpickaxeiron.txt')
+        pass
+    def swordiron(self, man):
+        # это происходит когда нажато e
+        self.showOnLevel=True
+        self.stopMan=False
+        self.critic_distance =-1
+        # превращаюсь в сидящего в лодке чувака
+        man.update_background('heroes/manswordiron.txt')
+        pass
+    def each_tick (self):
+        self.age+=1
+        pass
+    def near_event_message(self):
+        return "💭"
+    def near_man(self, man):
+        #print ('Hello Man!')
+        pass    
     def on_action(self, man):
         print("--- КУЗНИЦА ПУСТЫНИ ---")
         print("1. Каменная КИРКА  (3 камня + 2 палки)")
@@ -290,6 +334,7 @@ class Dragon (NPC):
                 man.inventory.wood -= 2
                 man.pickaxe_type = "stone" # Уровень 1
                 print("Торговец: Для начала сойдёт! Камень — сила!")
+                self.pickstone(man)
             else:
                 print("Торговец: Не хватает камней или палок!")
 
@@ -299,7 +344,8 @@ class Dragon (NPC):
                 man.inventory.stones -= 2
                 man.inventory.wood -= 1
                 man.sword_type = "stone"
-                print("Торговец: Тяжёлый, но острый!")
+                self.swordstone(man)
+                print("Торговец: Тяжёлый, но массивный!")
                                                                    
         elif choice == '3': # КИРКА
             if man.inventory.iron >= 3 and man.inventory.wood >= 2:
