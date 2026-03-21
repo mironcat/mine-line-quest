@@ -69,8 +69,8 @@ class Message():
 class Inventory(Message):
     def __init__(self):
         super().__init__()  # Вызов конструктора родителя
-        self.wood = 2
-        self.stones = 3
+        self.wood = 0
+        self.stones = 0
         self.iron = 0
         self.clear_backgound=True
         self.resources = ['wood', 'stones', 'iron']  # список ресурсов
