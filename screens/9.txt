@@ -10,6 +10,6 @@
                                                                                            
                                                                                            
 wwwWWWWWWWVOLNAWWWWWWWWWWWWhhhHHHHHWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWwwwwwwwwwWWWWW
-!!      @                                                                               !!!
-        5                                                                                  
-        0                                                                                  
+!!      @                                                                               000
+        5                                                                               111
+        0                                                                               000

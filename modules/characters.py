@@ -6,7 +6,7 @@ class Character:
     def __init__(self, filename, x, y, clear_backgound = True):
         try:
             with open(filename, 'r', encoding='utf-8') as file:
-                template = file.read().split('\n')
+                template = file.read().splitlines()
         except FileNotFoundError:
             print(f"Файл {filename} не найден!")
             template = []  # или другое значение по умолчанию
@@ -34,8 +34,8 @@ class Character:
     def move_left(self,speed):
         self.x-=speed
     def get_char(self, row, col):
-        # Возвращает символ в указанной позиции 
-        if 0 <= row < self.height and 0 <= col < self.width:
+        # Возвращает символ в указанной позиции
+        if 0 <= row < self.height and 0 <= col < len(self.template[row]):
             return self.template[row][col]
         return ' '
 
@@ -115,6 +115,14 @@ class Man (Character):
         self.name = 'Вадик'
         self.command = ''
         self.has_pickaxe = True
+        self.max_hp = 100
+        self.hp = self.max_hp
+        self.sword_type = None
+    def attack_damage(self):
+        # урон зависит от меча, который куплен у торговца
+        return {'stone': 2, 'iron': 4}.get(self.sword_type, 1)
+    def weapon_name(self):
+        return {'stone': 'каменный меч', 'iron': 'железный меч'}.get(self.sword_type, 'кулаки')
     def reset_event(self):
         self.event = Event('пусто', '')
     def set_event(self, event):
@@ -123,6 +131,12 @@ class Man (Character):
         self.active_character = character
     def interaction(self, ):
         self.active_character.on_action(self)
+    def defend(self):
+        # защита работает только рядом с персонажем, который умеет драться
+        if self.active_character is not None and hasattr(self.active_character, 'on_defend'):
+            self.active_character.on_defend(self)
+            return True
+        return False
 
 class NPC (Character):
     
@@ -360,10 +374,118 @@ class Trader (NPC):
             if man.inventory.iron >= 2 and man.inventory.wood >= 1:
                 man.inventory.iron -= 2
                 man.inventory.wood -= 1
-                man.has_sword = True # Добавь эту переменную в класс Man
+                man.sword_type = "iron"
+                self.swordiron(man)
                 print("Торговец: Острый, как бритва! Дракон оценит!")
             else:
                 print("Торговец: Маловато железа для такого клинка!")
 
         man.inventory.update()
         input("\nНажмите любую клавишу...")
+
+class Boss (NPC):
+    """Финальный босс — огромный гоблин.
+    Побеждается только тремя ударами железного меча.
+    Бьёт каждый второй ход, поэтому нужно чередовать атаку и защиту.
+    """
+    def __init__(self, filename, x, y):
+        super().__init__(filename, x, y, clear_backgound=False)
+        self.name = "КОРОЛЬ-ГОБЛИН"
+        self.max_hp = 3
+        self.hp = self.max_hp
+        self.stopMan = True
+        self.defeated = False
+        self.turn = 0
+        # босс большой, поэтому считаем расстояние по центру спрайта
+        self.critic_distance = self.width // 2 + 4
+
+    def each_tick(self):
+        self.age += 1
+
+    def check_critic_distance(self, man):
+        if self.defeated:
+            return False
+        center = self.x + self.width // 2
+        return abs(man.x - center) <= self.critic_distance
+
+    def near_event_message(self):
+        if self.defeated:
+            return ""
+        return "👹 КОРОЛЬ-ГОБЛИН: e — бить железным мечом, z — защита"
+
+    def near_man(self, man):
+        # не подпускаем героя к боссу, пока тот жив
+        if self.defeated:
+            return
+        center = self.x + self.width // 2
+        if man.x < center:
+            man.x = min(man.x, self.x - 4)
+        else:
+            man.x = max(man.x, self.x + self.width + 4)
+
+    def show_hp(self):
+        hearts = '❤' * self.hp + '♡' * (self.max_hp - self.hp)
+        print(f"{self.name}: {hearts}")
+
+    def on_action(self, man):
+        # это происходит когда нажато e
+        if self.defeated:
+            return
+        self.turn += 1
+        print()
+        if man.sword_type != 'iron':
+            print(f"{man.name} бьёт {self.name}, но клинок не оставляет даже царапины!")
+            print("Нужен ЖЕЛЕЗНЫЙ меч: 2 железа + 1 дерево у торговца.")
+        else:
+            self.hp -= 1
+            print(f"{man.name} рубит {self.name} железным мечом!")
+        self.show_hp()
+
+        if self.hp <= 0:
+            self.defeat(man)
+            return
+
+        self.boss_turn(man, defending=False)
+
+    def on_defend(self, man):
+        # это происходит когда нажато z
+        if self.defeated:
+            return
+        self.turn += 1
+        print()
+        print(f"{man.name} поднимает меч и готовится отразить удар...")
+        self.boss_turn(man, defending=True)
+
+    def boss_turn(self, man, defending=False):
+        # Босс бьёт через ход: на чётных ходах он атакует.
+        if self.turn % 2 == 0:
+            if defending:
+                print(f"{self.name} обрушивает удар, но ты блокируешь его!")
+                print("Босс опускает кулак. Сейчас можно атаковать (e).")
+            else:
+                print(f"{self.name} обрушивает удар! Ты не успел защититься...")
+                man.hp = 0
+                self.player_died(man)
+                return
+        else:
+            print(f"{self.name} замахивается! Следующий ход — защита (z).")
+
+    def player_died(self, man):
+        print(f"{man.name} падает без сил...")
+        print(f"{self.name}: Ха-ха-ха! Тебе меня не одолеть!")
+        print("Ты очнулся у пирса. Босс восстановил силы.")
+        man.hp = man.max_hp
+        self.hp = self.max_hp
+        self.turn = 0
+        time.sleep(1)
+        man.set_event(Event('next_screen', '10'))
+
+    def defeat(self, man):
+        self.defeated = True
+        self.showOnLevel = False
+        self.critic_distance = -1
+        man.money += 500
+        print(f"{self.name}: Невозможно... Я же был вечен...")
+        print("БОСС ПОВЕРЖЕН! Ты победил огромного гоблина! (+500 монет)")
+        time.sleep(1)
+        man.set_event(Event('next_screen', '12'))

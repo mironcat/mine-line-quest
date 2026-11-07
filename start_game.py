@@ -59,8 +59,8 @@ while answer != "q":
         
         current_level.update_characters(man)
         if man.event.type=='near_event': man_action = man.event.value
-        print(f"a - влево, d - вправо, i- инвентарь, e - взаимодействие (можно сделать):{man_action}")
-        print(f"уровень:{screen_name} деньги: {man.money}")    
+        print(f"a - влево, d - вправо, i - инвентарь, e - взаимодействие/атака, z - защита. (можно сделать):{man_action}")
+        print(f"уровень:{screen_name} деньги: {man.money} HP: {man.hp}/{man.max_hp} оружие: {man.weapon_name()}")    
 
         current_level.display(scene, underground=debug)
         # Рисуем реакцию персонажей
@@ -87,6 +87,9 @@ while answer != "q":
             man.interaction()
             full_scene = current_level.draw_scene_characters()
             #full_scene = current_level._draw_character_on_scene(full_scene, man.active_character)
+        if man.event.type=='near_event' and (answer == 'z' or answer == 'я'):
+            man.defend()
+            full_scene = current_level.draw_scene_characters()
         
         if man.event.type=='next_screen':
                 game_state[last_screen_name] = copy.deepcopy(current_level) # сохраняем старое состояние 

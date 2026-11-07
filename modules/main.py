@@ -71,7 +71,9 @@ class ASCIIArt:
             elif symbol == 'r':
                 trader = Trader(filename='heroes/trader.txt', x=index-2, y=y)
                 self.characters.append(trader)                               
-                                                                             
+            elif symbol == 'b':
+                boss = Boss(filename='heroes/boss.txt', x=index-2, y=y)
+                self.characters.append(boss)                               
         return self.characters                                               
     def get_coords(self, under_coords1,under_coords2, index):                
             # Разбиваем строки на отдельные символы
