@@ -24,7 +24,7 @@ man.command=""
 current_level = ASCIIArt()
 answer:str = ""
 input_str:str = ""
-screen_name:str = "7"
+screen_name:str = "1"
 last_screen_name = screen_name
 last_answer=""
 intro = current_level.load_scene("0")
@@ -94,5 +94,8 @@ while answer != "q":
         if man.event.type=='next_screen':
                 game_state[last_screen_name] = copy.deepcopy(current_level) # сохраняем старое состояние 
                 screen_name = man.event.value
+                # лодка остаётся только на морском уровне, по земле герой идёт пешком
+                if last_screen_name == '9' and screen_name != '9':
+                    man.update_background('heroes/man.txt')
         
 

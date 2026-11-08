@@ -69,9 +69,9 @@ class Message():
 class Inventory(Message):
     def __init__(self):
         super().__init__()  # Вызов конструктора родителя
-        self.wood = 10
-        self.stones = 10
-        self.iron = 10
+        self.wood = 0
+        self.stones = 0
+        self.iron = 0
         self.clear_backgound=True
         self.resources = ['wood', 'stones', 'iron']  # список ресурсов
         self.update()
@@ -115,6 +115,7 @@ class Man (Character):
         self.name = 'Вадик'
         self.command = ''
         self.has_pickaxe = True
+        self.pickaxe_type = None
         self.max_hp = 100
         self.hp = self.max_hp
         self.sword_type = None
@@ -206,7 +207,7 @@ class Javal (NPC):
         pass
     def near_event_message(self):
         # это сообщение показывается когда critic_distance<=расстоянию до man
-        return "⛏️"
+        return "🪨 камень: e — сломать рукой"
     def near_man(self, man):
         if self.stopMan: man.x = self.x-6
         # это происходит когда critic_distance<=расстоянию до man
@@ -253,6 +254,11 @@ class Ore (NPC):
         return 'Hello Man!'
         pass
     def on_action(self, man):
+        # руду можно добыть только киркой (каменной или железной)
+        if getattr(man, 'pickaxe_type', None) not in ('stone', 'iron'):
+            print("Руда не поддаётся голыми руками. Нужна каменная кирка!")
+            input("Нажмите любую клавишу...")
+            return
         self.showOnLevel = False
         if self.resource != 0:
             man.inventory.collect_resource('iron', self.resource)
@@ -366,6 +372,7 @@ class Trader (NPC):
                 man.inventory.iron -= 3
                 man.inventory.wood -= 2
                 man.has_pickaxe = True
+                man.pickaxe_type = "iron"
                 print("Торговец: Мощная штука! Любой завал разлетится!")
             else:
                 print("Торговец: Не хватает ресурсов на кирку!")
