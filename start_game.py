@@ -1,17 +1,31 @@
-# создатель exe файла
-# pyinstaller --clean .\make_exe.spec   
+# сборка exe: python release.py (см. README)
 import copy
 from modules.main import ASCIIArt
 from modules.characters import Man
 import os
+import sys
 #os.system('mode con: cols=180 lines=30')
 import time
 # import keyboard  # pip install keyboard
 
 clear = lambda: os.system('cls')
 
-#отладка!!
-debug = True
+def setup_console():
+    """UTF-8 в консоли: ASCII-арт содержит символы, которых нет в cp866/cp1251."""
+    if os.name != 'nt':
+        return
+    try:
+        os.system('chcp 65001 >nul')
+        for stream in (sys.stdin, sys.stdout, sys.stderr):
+            stream.reconfigure(encoding='utf-8', errors='replace')
+    except (AttributeError, OSError, ValueError):
+        pass
+
+setup_console()
+
+# отладка: в исходниках включена, в собранном exe выключена.
+# Принудительно включить в exe: set MINE_LINE_DEBUG=1
+debug = os.environ.get('MINE_LINE_DEBUG') == '1' or not getattr(sys, 'frozen', False)
 
 man = Man('heroes/man.txt', x=5,y=3)
 

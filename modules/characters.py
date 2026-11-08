@@ -1,11 +1,12 @@
 import math
 import time
 import random
+from modules.paths import resource_path
 class Character:
     """Класс для представления персонажа"""
     def __init__(self, filename, x, y, clear_backgound = True):
         try:
-            with open(filename, 'r', encoding='utf-8') as file:
+            with open(resource_path(filename), 'r', encoding='utf-8') as file:
                 template = file.read().splitlines()
         except FileNotFoundError:
             print(f"Файл {filename} не найден!")
@@ -22,7 +23,7 @@ class Character:
     def update_background(self, filename, clear_backgound = True):
         """Обновляет изображение персонажа из файла"""
         try:
-            with open(filename, 'r', encoding='utf-8') as f:
+            with open(resource_path(filename), 'r', encoding='utf-8') as f:
                 self.template = f.read().splitlines()
                 self.height = len(self.template)
                 self.width = len(self.template[0]) if self.template else 0                

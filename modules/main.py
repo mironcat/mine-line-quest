@@ -1,4 +1,5 @@
 from modules.characters import *
+from modules.paths import resource_path
 class ASCIIArt:
     def __init__(self):
         #   background_art (list): изображение
@@ -16,7 +17,7 @@ class ASCIIArt:
     def set_background(self, filename):
         """Загружает изображение из файла"""
         try:
-            with open(filename, 'r', encoding='utf-8') as f:
+            with open(resource_path(filename), 'r', encoding='utf-8') as f:
                 self.background = f.read().splitlines()
                 self.characters = self.add_characters()  # это создает персонажей
         except FileNotFoundError:
